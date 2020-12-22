@@ -63,13 +63,13 @@ class Elast_ThickCylinder(Elasticity2D_coll_dist):
         
 #define the model properties
 model_data = dict()
-model_data["radius_int"] = 1.
-model_data["radius_ext"] = 4.
-model_data["E"] = 1e2
+model_data["radius_int"] = 0.5
+model_data["radius_ext"] = 1.
+model_data["E"] = 90.2
 model_data["nu"] = 0.3
 model_data["state"] = "plane strain"
-model_data["inner_pressure"] = 10.
-model_data["outer_pressure"] = 0.
+model_data["inner_pressure"] = 0.
+model_data["outer_pressure"] = 1.
 
 # generate the model geometry
 geomDomain = QuarterAnnulus(model_data["radius_int"], model_data["radius_ext"])
@@ -122,8 +122,10 @@ plot_pts(Xint, Xbnd[:,0:2])
 # define loading
 YbndA0 = -model_data["inner_pressure"]*XbndA0[:,2:3]
 YbndA1 = -model_data["inner_pressure"]*XbndA0[:,3:4]
-YbndB0 = -model_data["outer_pressure"]*XbndB0[:,2:3]
-YbndB1 = -model_data["outer_pressure"]*XbndB0[:,3:4]
+YbndB0 = np.zeros_like(xPhysBndB).astype(data_type)
+YbndB1 = np.zeros_like(xPhysBndB).astype(data_type)
+YbndB0[-17:] = -model_data["outer_pressure"]*XbndB0[-17:,2:3]
+YbndB1[-17:] = -model_data["outer_pressure"]*XbndB0[-17:,3:4]
 YbndC = np.zeros_like(xPhysBndC).astype(data_type)
 YbndD = np.zeros_like(xPhysBndD).astype(data_type)
 Ybnd = np.concatenate((YbndA0, YbndA1, YbndB0, YbndB1, YbndC, YbndD), axis=0)
