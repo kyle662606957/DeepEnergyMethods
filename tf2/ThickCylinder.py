@@ -40,6 +40,7 @@ import matplotlib as mpl
 mpl.rcParams['figure.dpi'] = 200
 np.random.seed(42)
 tf.random.set_seed(42)
+tf.config.experimental_run_functions_eagerly(True)
 
 
 class Elast_ThickCylinder(Elasticity2D_coll_dist):
