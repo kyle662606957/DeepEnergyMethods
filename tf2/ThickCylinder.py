@@ -229,6 +229,8 @@ XTest_tf = tf.convert_to_tensor(XTest)
 YTest = pred_model(XTest_tf).numpy()  
 xPhysTest = xPhysTest.astype(data_type)
 yPhysTest = yPhysTest.astype(data_type)
+xPhysTest=tf.convert_to_tensor(xPhysTest)
+yPhysTest=tf.convert_to_tensor(yPhysTest)
 stress_xx_comp, stress_yy_comp, stress_xy_comp = pred_model.constitutiveEq(xPhysTest, yPhysTest)
 
 stress_xx_comp = stress_xx_comp.numpy()
